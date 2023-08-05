@@ -1,0 +1,2 @@
+cl /Fo src/init.obj /c src/init.cpp /nologo -EHsc -DNDEBUG /MDd /Igodot-cpp\include /Igodot-cpp\include\core /Igodot-cpp\include\gen /Igodot-cpp\godot-headers
+link /nologo /dll /out:bin\optimoves.dll /implib:bin\libopti.lib src\init.obj godot-cpp\bin\libgodot-cpp.windows.debug.64.lib /machine:x64
