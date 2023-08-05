@@ -177,6 +177,15 @@ opts.Add(
         True,
     )
 )
+opts.Add(
+    BoolVariable(
+        "use_static_cpp",
+        "Build the library using /MT instead of /MD.",
+        True,
+    )
+)
+
+opts.Add(BoolVariable("ios_simulator", "Target iOS Simulator", False))
 
 opts.Add(BoolVariable("build_library", "Build the godot-cpp library.", True))
 
@@ -300,9 +309,9 @@ elif env["platform"] == "windows":
         # MSVC
         env.Append(LINKFLAGS=["/WX"])
         if env["target"] == "debug":
-            env.Append(CCFLAGS=["/Z7", "/Od", "/EHsc", "/D_DEBUG", "/MDd"])
+            env.Append(CCFLAGS=["/Z7", "/Od", "/EHsc", "/D_DEBUG", "/MTd" if env["use_static_cpp"] else "/MDd"])
         elif env["target"] == "release":
-            env.Append(CCFLAGS=["/O2", "/EHsc", "/DNDEBUG", "/MD"])
+            env.Append(CCFLAGS=["/O2", "/EHsc", "/DNDEBUG", "/MT" if env["use_static_cpp"] else "/MD"])
 
     elif host_platform == "linux" or host_platform == "freebsd" or host_platform == "osx":
         # Cross-compilation using MinGW
